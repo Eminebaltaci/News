@@ -47,10 +47,10 @@ public class TurkMedyaClientManager : ITurkMedyaClientService
         Tüm ana sayfa haberlerini almak için GetAllHomepageNewsAsync metodunu kullanır.
         Alınan tüm haberler, istenilen sayfa indeksi ve boyutuna göre parçalanır (sayfalama yapılır).
         Sayfalama işlemi sonucunda elde edilen haberler, Paginate yapısı içinde başarılı bir şekilde döndürülür.**/
-    public async Task<IDataResult<Paginate<HomepageItemList>>> GetAllPaginatedHomepageNewsAsync(int? index = 0, int? size = 5)
+    public async Task<IDataResult<Paginate<HomepageItemList>>> GetAllPaginatedHomepageNewsAsync(int? index, int? size)
     {
-        int pageIndex = index ?? 0;
-        int pageSize = size ?? 5;
+        int pageIndex = index ?? ConstantValues.DefaultIndex;
+        int pageSize = size ?? ConstantValues.DefaultSize;
         var allNews = await GetAllHomepageNewsAsync();
         return new SuccessDataResult<Paginate<HomepageItemList>>(
             allNews?.Data.ToPaginate(pageIndex, pageSize)
@@ -61,10 +61,10 @@ public class TurkMedyaClientManager : ITurkMedyaClientService
      Haberler, sayfalama için verilen indeks ve boyut bilgilerine göre parçalanır (sayfalama yapılır).
      Eğer filtre sonucunda haberler bulunursa, bu haberlerin sayfalanmış versiyonu başarıyla döndürülür.
      Haberler bulunamazsa veya filtrelerle eşleşen sonuç yoksa, ilgili hata sonucu döndürülür.**/
-    public async Task<IDataResult<Paginate<HomepageItemList>>> GetFilteredHomepageNewsAsync(string category, string searchText, int? index = 0, int? size = 5)
+    public async Task<IDataResult<Paginate<HomepageItemList>>> GetFilteredHomepageNewsAsync(string category, string searchText, int? index, int? size)
     {
-        int pageIndex = index ?? 0;
-        int pageSize = size ?? 5;
+        int pageIndex = index ?? ConstantValues.DefaultIndex;
+        int pageSize = size ?? ConstantValues.DefaultSize;
         var newsResult = await GetAllHomepageNewsAsync();
         if (!newsResult.Success) return new ErrorDataResult<Paginate<HomepageItemList>>(newsResult.Message);
         var news = newsResult.Data;

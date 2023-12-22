@@ -29,12 +29,12 @@ namespace NewsUI.Controllers
             GetNewsResponseDto response = new();
             if (!string.IsNullOrEmpty(category) || !string.IsNullOrEmpty(searchText))
             {
-                var filteredNews = await _turkMedyaClientService.GetFilteredHomepageNewsAsync(category, searchText, index: page - 1);
+                var filteredNews = await _turkMedyaClientService.GetFilteredHomepageNewsAsync(category, searchText, index: page - 1, null);
                 response.News = filteredNews?.Data;
             }
             else
             {
-                var news = await _turkMedyaClientService.GetAllPaginatedHomepageNewsAsync(page - 1);
+                var news = await _turkMedyaClientService.GetAllPaginatedHomepageNewsAsync(page - 1, null);
                 response.News = news?.Data;
             }
             if (response != null && response?.News?.Items?.Count > 0)

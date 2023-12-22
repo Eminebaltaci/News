@@ -12,4 +12,6 @@ public static class ConstantValues
 {
     public static string SectionTypeNews = "NEWS";
     public static string SelectCategory = "Select Category";
+    public static int DefaultSize = 5;
+    public static int DefaultIndex = 0;
 }

@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Dynamic;
+﻿using Business.BusinessConstants;
+using Core.Utilities.Dynamic;
 using Core.Utilities.Results;
 using Entities.Dtos;
 using Entities.Dtos.DetailpageDtos;
@@ -17,6 +18,6 @@ public interface ITurkMedyaClientService
     Task<IDataResult<List<HomepageItemList>>> GetAllHomepageNewsAsync();
     Task<IDataResult<DetailpageNews>> GetNewsDetailsAsync();
     Task<List<SelectListItem>> GetNewsCategoryListAsync();
-    Task<IDataResult<Paginate<HomepageItemList>>> GetAllPaginatedHomepageNewsAsync(int? index = 0, int? size = 5);
-    Task<IDataResult<Paginate<HomepageItemList>>> GetFilteredHomepageNewsAsync(string category, string searchText, int? index = 0, int? size = 5);
+    Task<IDataResult<Paginate<HomepageItemList>>> GetAllPaginatedHomepageNewsAsync(int? index , int? size);
+    Task<IDataResult<Paginate<HomepageItemList>>> GetFilteredHomepageNewsAsync(string category, string searchText, int? index, int? size);
 }
