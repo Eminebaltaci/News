@@ -1,0 +1,32 @@
+﻿@** Öncelikle, routeValues adında bir nesne oluşturulur ve ViewBag.Category veya ViewBag.SearchText değerleri boş değilse,
+ routeValues nesnesi bu değerleri içerecek şekilde doldurulur.
+ Daha sonra, @PagedList.Pager yardımcı yöntemi, sayfalama için gerekli bağlantıları oluşturmak için kullanılır.
+ Bu yardımcı yöntem, Index metodu için sayfalama bağlantılarını oluşturur ve PagerOptions ile sayfa numaralarını, toplam öğe sayısını,
+ önceki ve sonraki sayfa bağlantılarını ve diğer sayfalama seçeneklerini belirtmek için kullanılır.
+ Bu kod parçası, sayfalama işlevselliğini görünüme (View) ekler ve kullanıcıya sayfalar arasında gezinme imkanı sunar. **@
+@using MvcPagedList.Core;
+
+@{
+    object routeValues = new();
+
+    if (!string.IsNullOrEmpty(ViewBag.Category) || !string.IsNullOrEmpty(ViewBag.SearchText))
+    {
+        routeValues = new
+        {
+            Category = ViewBag.Category,
+            SearchText = ViewBag.SearchText
+        };
+    }
+}
+
+@PagedList.Pager(actionName: "Index", controllerName: "Home", areaName: "",
+    routeValues: routeValues,
+    pagerOptions: new PagerOptions
+                {
+                    currentPage = (int)ViewBag.CurrentPage,
+                    PageCount = (int)ViewBag.PageSize,
+                    TotalItemCount = (int)ViewBag.TotalItemCount,
+                    DisplayLinkToPreviousPage = true,
+                    DisplayLinkToNextPage = true,
+                    DisplayPageCountAndCurrentLocation = true
+                })
